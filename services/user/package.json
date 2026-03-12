@@ -1,0 +1,50 @@
+{
+  "name": "user",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm install && tsc",
+    "start": "node dist/server.js",
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/server.js\" \"nodemon dist/workers/profileVisitFlushWorker.js\" \"nodemon dist/workers/profileStarFlushWorker.js\"",
+    "worker:profile-visits": "node dist/workers/profileVisitFlushWorker.js",
+    "dev:worker:profile-visits": "nodemon dist/workers/profileVisitFlushWorker.js",
+    "worker:profile-stars": "node dist/workers/profileStarFlushWorker.js",
+    "dev:worker:profile-stars": "nodemon dist/workers/profileStarFlushWorker.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/amqplib": "^0.10.8",
+    "amqplib": "^0.10.7",
+    "axios": "^1.13.4",
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^2.9.0",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.6",
+    "datauri": "^4.1.0",
+    "dotenv": "^17.2.4",
+    "express": "^5.2.1",
+    "googleapis": "^171.4.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.1.6",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "typescript": "^5.9.3",
+    "user": "file:"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.0.0",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8"
+  }
+}

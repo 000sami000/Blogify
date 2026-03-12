@@ -1,0 +1,48 @@
+{
+  "name": "author",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/server.js\"",
+    "migration:generate": "typeorm-ts-node-esm -d src/utils/db.ts migration:generate src/migrations/AutoMigration",
+    "migration:create": "typeorm-ts-node-esm -d src/utils/db.ts migration:create src/migrations/ManualMigration",
+    "migration:run": "typeorm-ts-node-esm -d src/utils/db.ts migration:run",
+    "migration:revert": "typeorm-ts-node-esm -d src/utils/db.ts migration:revert",
+    "migration:show": "typeorm-ts-node-esm -d src/utils/db.ts migration:show"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/genai": "1.8.0",
+    "@google/generative-ai": "0.24.1",
+    "@types/amqplib": "^0.10.7",
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/multer": "2.0.0",
+    "amqplib": "^0.10.7",
+    "cloudinary": "2.9.0",
+    "concurrently": "^9.1.2",
+    "cors": "^2.8.5",
+    "datauri": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "multer": "^1.4.5-lts.2",
+    "pg": "^8.18.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.26",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}

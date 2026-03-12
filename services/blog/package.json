@@ -1,0 +1,46 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "start:counter-worker": "node dist/workers/counterFlushWorker.js",
+    "dev": "concurrently \"tsc -w\" \"nodemon dist/server.js\"",
+    "dev:counter-worker": "concurrently \"tsc -w\" \"nodemon dist/workers/counterFlushWorker.js\"",
+    "migration:generate": "typeorm-ts-node-esm -d src/utils/db.ts migration:generate src/migrations/AutoMigration",
+    "migration:create": "typeorm-ts-node-esm -d src/utils/db.ts migration:create src/migrations/ManualMigration",
+    "migration:run": "typeorm-ts-node-esm -d src/utils/db.ts migration:run",
+    "migration:revert": "typeorm-ts-node-esm -d src/utils/db.ts migration:revert",
+    "migration:show": "typeorm-ts-node-esm -d src/utils/db.ts migration:show"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/amqplib": "^0.10.8",
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "amqplib": "^0.10.7",
+    "axios": "^1.8.8",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "pg": "^8.18.0",
+    "redis": "^5.8.2",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.26",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "typeorm-ts-node-esm": "^0.3.20"
+  }
+}
