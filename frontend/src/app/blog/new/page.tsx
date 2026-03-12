@@ -19,8 +19,6 @@ import {
   FileImage,
   FileText,
   Gauge,
-  RefreshCw,
-  Sparkles,
   Wand2,
 } from "lucide-react";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -284,76 +282,6 @@ const AddBlog = () => {
     await submitBlog("published");
   };
 
-  const [aiTitle, setAiTitle] = useState(false);
-
-  const aiTitleResponse = async () => {
-    try {
-      setAiTitle(true);
-      clearApiError();
-      const { data } = await axios.post(`${author_service}/api/v1/ai/title`, {
-        text: formData.title,
-      });
-      setFormData((prev) => ({ ...prev, title: String(data ?? "").slice(0, MAX_TITLE_LENGTH) }));
-      setApiErrorMessage(null);
-    } catch (error) {
-      const message = getApiErrorMessage(error, "Problem while generating title with AI");
-      setPageError(message);
-      setApiErrorMessage(message);
-      toast.error(message);
-    } finally {
-      setAiTitle(false);
-    }
-  };
-
-  const [aiDescription, setAiDescription] = useState(false);
-
-  const aiDescriptionResponse = async () => {
-    try {
-      setAiDescription(true);
-      clearApiError();
-      const { data } = await axios.post(`${author_service}/api/v1/ai/descripiton`, {
-        title: formData.title,
-        description: formData.description,
-      });
-      setFormData((prev) => ({
-        ...prev,
-        description: String(data ?? "").slice(0, MAX_DESCRIPTION_LENGTH),
-      }));
-      setApiErrorMessage(null);
-    } catch (error) {
-      const message = getApiErrorMessage(error, "Problem while generating description with AI");
-      setPageError(message);
-      setApiErrorMessage(message);
-      toast.error(message);
-    } finally {
-      setAiDescription(false);
-    }
-  };
-
-  const [aiBlogLoading, setAiBlogLoading] = useState(false);
-
-  const aiBlogResponse = async () => {
-    try {
-      setAiBlogLoading(true);
-      clearApiError();
-      const { data } = await axios.post(`${author_service}/api/v1/ai/blog`, {
-        blog: blogContentRef.current,
-      });
-      const aiHtml = String(data?.html ?? "");
-      blogContentRef.current = aiHtml;
-      composerRef.current?.setFromHtml(aiHtml);
-      setMetricsHtml(aiHtml);
-      setApiErrorMessage(null);
-    } catch (error) {
-      const message = getApiErrorMessage(error, "Problem while improving content with AI");
-      setPageError(message);
-      setApiErrorMessage(message);
-      toast.error(message);
-    } finally {
-      setAiBlogLoading(false);
-    }
-  };
-
   return (
     <section className="mx-auto w-full max-w-none animate-fade-up py-6">
       <div className="premium-panel mb-6 overflow-hidden border-0 p-6 sm:p-8">
@@ -378,23 +306,10 @@ const AddBlog = () => {
                       name="title"
                       value={formData.title}
                       onChange={handleInputChange}
-                      placeholder="The rise of edge AI in healthcare"
+                      placeholder="The rise of edge computing in healthcare"
                       maxLength={MAX_TITLE_LENGTH}
-                      className={aiTitle ? "animate-pulse" : ""}
                       required
                     />
-                    {formData.title.trim() && (
-                      <Button
-                        type="button"
-                        onClick={aiTitleResponse}
-                        disabled={aiTitle}
-                        variant="outline"
-                        className="shrink-0"
-                        title="Regenerate title"
-                      >
-                        <RefreshCw className={aiTitle ? "animate-spin" : ""} />
-                      </Button>
-                    )}
                   </div>
                   <p className="mt-1 text-xs text-muted-foreground">
                     Slug preview: /blog/{slugPreview || "your-title"}
@@ -410,23 +325,9 @@ const AddBlog = () => {
                       onChange={handleInputChange}
                       placeholder="Write a concise summary that helps readers decide to open your article."
                       maxLength={MAX_DESCRIPTION_LENGTH}
-                      className={`min-h-24 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none transition focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 ${
-                        aiDescription ? "animate-pulse" : ""
-                      }`}
+                      className="min-h-24 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none transition focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                       required
                     />
-                    {formData.title.trim() && (
-                      <Button
-                        onClick={aiDescriptionResponse}
-                        type="button"
-                        disabled={aiDescription}
-                        variant="outline"
-                        className="shrink-0"
-                        title="Regenerate description"
-                      >
-                        <RefreshCw className={aiDescription ? "animate-spin" : ""} />
-                      </Button>
-                    )}
                   </div>
                 </div>
               </div>
@@ -442,18 +343,6 @@ const AddBlog = () => {
                     Keep paragraphs short, add meaningful headings, and use visuals where useful.
                   </p>
                 </div>
-                <Button
-                  type="button"
-                  size="sm"
-                  onClick={aiBlogResponse}
-                  disabled={aiBlogLoading}
-                  variant="outline"
-                  className="rounded-full"
-                >
-                  <Sparkles size={16} className="mr-1" />
-                  <RefreshCw size={14} className={aiBlogLoading ? "animate-spin" : ""} />
-                  <span className="ml-2">Polish With AI</span>
-                </Button>
               </div>
 
               <BlockComposer ref={composerRef} onChange={handleComposerChange} />
